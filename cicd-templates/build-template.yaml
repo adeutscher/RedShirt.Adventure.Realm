@@ -1,0 +1,26 @@
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      feedRestore: $(NuGetFeed)
+      projects: '**/*.csproj'
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      arguments: --no-restore
+      projects: $(BuildParameters.RestoreBuildProjects)
+
+  - script: |
+      echo $PATH && \
+      dotnet coverage collect "dotnet test" -f xml -o "$(Agent.TempDirectory)/coverage.cobertura.xml"
+    displayName: Test
+
+  - task: reportgenerator@5
+    displayName: ReportGenerator
+    inputs:
+      reports: "$(Agent.TempDirectory)/coverage.cobertura.xml"
+      targetdir: 'coveragereport'
+      publishCodeCoverageResults: true
+      assemblyfilters: '+RedShirt*,-*Tests.dll'

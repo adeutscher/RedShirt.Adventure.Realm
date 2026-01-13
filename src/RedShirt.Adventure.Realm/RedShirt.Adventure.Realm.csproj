@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NSwag.AspNetCore" Version="14.6.3"/>
+        <PackageReference Include="NSwag.MSBuild" Version="14.6.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Characters.Core\RedShirt.Adventure.Realm.Characters.Core.csproj"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Characters.Implementations\RedShirt.Adventure.Realm.Characters.Implementations.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\ExampleItem\"/>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="$(NSwagExe_Net100) run nswag.json /variables:Configuration=$(Configuration)"/>
+    </Target>
+
+</Project>

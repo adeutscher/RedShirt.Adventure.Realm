@@ -1,0 +1,26 @@
+trigger: none
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+variables:
+  - template: constants.yaml
+  - group: 'Azure Devops Artifact Read'
+
+jobs:
+  - deployment: Deploy
+    workspace:
+      clean: all
+    displayName: 'Dev Build and Deploy'
+    continueOnError: false
+    pool:
+      name: $(pool)
+    environment: $(env)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+              clean: true
+              persistCredentials: true
+            - template: cicd-templates/build-image-template.yaml
+            - template: cicd-templates/deploy-image-template.yaml

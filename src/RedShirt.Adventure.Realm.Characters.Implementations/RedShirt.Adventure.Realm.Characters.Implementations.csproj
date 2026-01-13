@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Characters.Core\RedShirt.Adventure.Realm.Characters.Core.csproj"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Database\RedShirt.Adventure.Realm.Common.Database.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,29 @@
+trigger: none
+
+variables:
+  - template: constants.yaml
+  - name: isMain
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))]
+  - group: 'Azure Devops Artifact Read'
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+jobs:
+  - deployment: Deploy
+    workspace:
+      clean: all
+    displayName: 'Prod Build and Deploy'
+    continueOnError: false
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
+    pool:
+      name: $(pool)
+    environment: $(env)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self
+              clean: true
+              persistCredentials: true
+            - template: cicd-templates/build-image-template.yaml
+            - template: cicd-templates/deploy-image-template.yaml

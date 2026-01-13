@@ -1,0 +1,49 @@
+variables:
+  - template: version.yaml
+  - name: VersionCompiledRelease
+    value: '$(VersionMajor).$(VersionMinor).$(Build.BuildId)'
+  - name: isMain
+    value: $[or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))]
+  - name: BuildParameters.RestoreBuildProjects
+    value: swagger/RedShirt.Adventure.Realm.Interop/*.csproj
+  - name: BuildParameters.searchPatternPack
+    value: swagger/RedShirt.Adventure.Realm.Interop/*.csproj
+trigger:
+  branches:
+    include:
+      - refs/heads/develop
+  paths:
+    include:
+      - /swagger/RedShirt.Adventure.Realm.Interop/*
+name: $(date:yyyyMMdd)$(rev:.r)
+jobs:
+  - job: Job_1
+    displayName: RedShirt.Adventure.Realm.Interop
+    pool:
+      name: $(pool)
+    condition: and(succeeded(), eq(variables.isMain, 'true'))
+    steps:
+      - checkout: self
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs:
+          command: restore
+          projects: $(BuildParameters.RestoreBuildProjects)
+      - task: DotNetCoreCLI@2
+        displayName: Build
+        inputs:
+          projects: $(BuildParameters.RestoreBuildProjects)
+          arguments: --configuration $(BuildConfiguration)
+      - task: DotNetCoreCLI@2
+        displayName: dotnet pack
+        inputs:
+          command: pack
+          searchPatternPack: $(BuildParameters.searchPatternPack)
+          versioningScheme: byEnvVar
+          versionEnvVar: VersionCompiledRelease
+      - task: NuGetAuthenticate@1
+        displayName: 'NuGet Authenticate'
+      - script: |
+          dotnet nuget push --source "$(NuGetFeedJsonUrl)" --api-key az --skip-duplicate $(Build.ArtifactStagingDirectory)/*.nupkg
+        displayName: Push
+...

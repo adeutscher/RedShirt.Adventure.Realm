@@ -1,0 +1,5 @@
+variables:
+  - name: VersionMajor
+    value: 1
+  - name: VersionMinor
+    value: 0

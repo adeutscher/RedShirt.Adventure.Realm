@@ -1,0 +1,10 @@
+trigger: none
+variables:
+  - template: constants.yaml
+name: $(Date:yyyyMMdd)$(Rev:.r)
+jobs:
+  - job: Build
+    pool:
+      name: $(pool)
+    steps:
+      - template: cicd-templates/build-template.yaml
