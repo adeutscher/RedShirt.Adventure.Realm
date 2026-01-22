@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Analyzers.Abstractions\RedShirt.Adventure.Realm.Common.Analyzers.Abstractions.csproj" />
         <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Aws\RedShirt.Adventure.Realm.Common.Aws.csproj"/>
     </ItemGroup>
 </Project>

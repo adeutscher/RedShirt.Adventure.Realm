@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Analyzers.Abstractions\RedShirt.Adventure.Realm.Common.Analyzers.Abstractions.csproj"/>
+        <ProjectReference Include="../RedShirt.Adventure.Realm.Common.Analyzers.Generation\RedShirt.Adventure.Realm.Common.Analyzers.Generation.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="../RedShirt.Adventure.Realm.Common.Analyzers.Abstractions\RedShirt.Adventure.Realm.Common.Analyzers.Abstractions.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Cache\RedShirt.Adventure.Realm.Common.Cache.csproj"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Database\RedShirt.Adventure.Realm.Common.Database.csproj"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Common.Exceptions\RedShirt.Adventure.Realm.Common.Exceptions.csproj"/>
+    </ItemGroup>
+
+</Project>

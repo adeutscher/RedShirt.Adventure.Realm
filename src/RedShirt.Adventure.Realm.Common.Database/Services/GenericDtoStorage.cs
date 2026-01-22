@@ -1,5 +1,6 @@
 using Dapper;
 using Microsoft.Extensions.Logging;
+using RedShirt.Adventure.Realm.Common.Analyzers.Abstractions.Attributes;
 using RedShirt.Adventure.Realm.Common.Database.Exceptions;
 using RedShirt.Adventure.Realm.Common.Database.Utility;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,8 @@ public interface IGenericDtoStorage<TDto, in TKey> where TDto : class
 {
     Task<bool> DeleteByKeyAsync(TKey key, CancellationToken cancellationToken = default);
     Task<TDto?> GetByKeyAsync(TKey entryId, CancellationToken cancellationToken = default);
+
+    string GetTableName();
 
     Task<TDto> UpsertAsync(TDto dto,
         CancellationToken cancellationToken = default);
@@ -41,11 +44,6 @@ public class GenericDtoStorage<TDto, TKey>(
 
                 return p.Name;
             });
-    }
-
-    private static string GetTableName()
-    {
-        return typeof(TDto).GetCustomAttributes<TableAttribute>().FirstOrDefault()?.Name ?? typeof(TDto).Name;
     }
 
     private async Task<TDto> InsertAsync(IDbConnection dbConnection, TDto itemTemplate,
@@ -132,8 +130,17 @@ public class GenericDtoStorage<TDto, TKey>(
     private static PropertyInfo GetKeyProperty()
     {
         return typeof(TDto).GetProperties()
-                   .FirstOrDefault(p => p.GetCustomAttributes(typeof(KeyAttribute)).Any()) ??
-               throw new CouldNotLocateKeyException();
+                   .FirstOrDefault(p => p.GetCustomAttributes(typeof(KeyAttribute)).Any())
+               ?? typeof(TDto).GetProperties()
+                   .FirstOrDefault(p => p.GetCustomAttributes(typeof(DbKeyAttribute)).Any())
+               ?? throw new CouldNotLocateKeyException();
+    }
+
+    public string GetTableName()
+    {
+        return typeof(TDto).GetCustomAttributes<TableAttribute>().FirstOrDefault()?.Name
+               ?? typeof(TDto).GetCustomAttributes<DbTableAttribute>().FirstOrDefault()?.TableName
+               ?? typeof(TDto).Name;
     }
 
     public async Task<bool> DeleteByKeyAsync(TKey key, CancellationToken cancellationToken = default)

@@ -140,6 +140,9 @@
               }
             }
           },
+          "304": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -150,7 +153,7 @@
               }
             }
           },
-          "404": {
+          "409": {
             "description": "",
             "content": {
               "application/json": {
@@ -159,9 +162,6 @@
                 }
               }
             }
-          },
-          "304": {
-            "description": ""
           }
         }
       }
@@ -201,12 +201,11 @@
             "x-position": 3
           },
           {
-            "name": "mapId",
+            "name": "pageSize",
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "nullable": true
+              "format": "int32"
             },
             "x-position": 4
           },
@@ -215,6 +214,7 @@
             "in": "query",
             "schema": {
               "type": "string",
+              "format": "guid",
               "nullable": true
             },
             "x-position": 5
@@ -238,28 +238,280 @@
           "Character"
         ],
         "operationId": "Character_Post",
+        "requestBody": {
+          "x-name": "postRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterPostRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character/{id}/location": {
+      "delete": {
+        "tags": [
+          "CharacterLocation"
+        ],
+        "operationId": "CharacterLocation_Delete",
         "parameters": [
           {
-            "name": "accountId",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CharacterLocation"
+        ],
+        "operationId": "CharacterLocation_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterLocationDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CharacterLocation"
+        ],
+        "operationId": "CharacterLocation_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "patchRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterLocationPatchRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterLocationDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CharacterLocation"
+        ],
+        "operationId": "CharacterLocation_Put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "putRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterLocationPutRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterLocationDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/character/attributes/location": {
+      "get": {
+        "tags": [
+          "CharacterLocation"
+        ],
+        "operationId": "CharacterLocation_List",
+        "parameters": [
+          {
+            "name": "mapId",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
             },
             "x-position": 1
           },
           {
-            "name": "firstName",
+            "name": "pageSize",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 2
           },
           {
-            "name": "lastName",
+            "name": "continuationToken",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "guid",
+              "nullable": true
             },
             "x-position": 3
           }
@@ -270,7 +522,263 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CharacterDto"
+                  "$ref": "#/components/schemas/CharacterLocationSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character/{id}/resources": {
+      "delete": {
+        "tags": [
+          "CharacterResources"
+        ],
+        "operationId": "CharacterResources_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CharacterResources"
+        ],
+        "operationId": "CharacterResources_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterResourcesDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CharacterResources"
+        ],
+        "operationId": "CharacterResources_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "patchRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterResourcesPatchRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterResourcesDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CharacterResources"
+        ],
+        "operationId": "CharacterResources_Put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "putRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterResourcesPutRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterResourcesDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/character/attributes/resources": {
+      "get": {
+        "tags": [
+          "CharacterResources"
+        ],
+        "operationId": "CharacterResources_List",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterResourcesSearchResponse"
                 }
               }
             }
@@ -318,7 +826,11 @@
             "type": "string",
             "format": "guid"
           },
-          "createdAt": {
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
             "type": "string",
             "format": "date-time"
           },
@@ -330,34 +842,6 @@
           },
           "lastName": {
             "type": "string"
-          },
-          "mapId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "positionX": {
-            "type": "number",
-            "format": "float"
-          },
-          "positionY": {
-            "type": "number",
-            "format": "float"
-          },
-          "positionZ": {
-            "type": "number",
-            "format": "float"
-          },
-          "rotation": {
-            "type": "number",
-            "format": "float"
-          },
-          "healthCurrent": {
-            "type": "integer",
-            "format": "uint64"
-          },
-          "healthMaximum": {
-            "type": "integer",
-            "format": "uint64"
           }
         }
       },
@@ -365,7 +849,12 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "items": {
+          "continuationToken": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "records": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CharacterDto"
@@ -388,7 +877,83 @@
           "lastName": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "CharacterPostRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountId": {
+            "type": "string"
           },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          }
+        }
+      },
+      "CharacterLocationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mapId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "positionX": {
+            "type": "number",
+            "format": "float"
+          },
+          "positionY": {
+            "type": "number",
+            "format": "float"
+          },
+          "positionZ": {
+            "type": "number",
+            "format": "float"
+          },
+          "rotation": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "CharacterLocationSearchResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "continuationToken": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterLocationDto"
+            }
+          }
+        }
+      },
+      "CharacterLocationPatchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
           "mapId": {
             "type": "integer",
             "format": "int32",
@@ -413,7 +978,82 @@
             "type": "number",
             "format": "float",
             "nullable": true
+          }
+        }
+      },
+      "CharacterLocationPutRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "mapId": {
+            "type": "integer",
+            "format": "int32"
           },
+          "positionX": {
+            "type": "number",
+            "format": "float"
+          },
+          "positionY": {
+            "type": "number",
+            "format": "float"
+          },
+          "positionZ": {
+            "type": "number",
+            "format": "float"
+          },
+          "rotation": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "CharacterResourcesDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "healthCurrent": {
+            "type": "integer",
+            "format": "uint64"
+          },
+          "healthMaximum": {
+            "type": "integer",
+            "format": "uint64"
+          }
+        }
+      },
+      "CharacterResourcesSearchResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "continuationToken": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterResourcesDto"
+            }
+          }
+        }
+      },
+      "CharacterResourcesPatchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
           "healthCurrent": {
             "type": "integer",
             "format": "uint64",
@@ -423,6 +1063,20 @@
             "type": "integer",
             "format": "uint64",
             "nullable": true
+          }
+        }
+      },
+      "CharacterResourcesPutRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "healthCurrent": {
+            "type": "integer",
+            "format": "uint64"
+          },
+          "healthMaximum": {
+            "type": "integer",
+            "format": "uint64"
           }
         }
       }

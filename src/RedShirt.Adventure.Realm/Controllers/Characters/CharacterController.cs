@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using RedShirt.Adventure.Realm.Attributes;
-using RedShirt.Adventure.Realm.Characters.Core.Models;
-using RedShirt.Adventure.Realm.Characters.Core.Models.Requests;
-using RedShirt.Adventure.Realm.Characters.Core.Models.Responses;
-using RedShirt.Adventure.Realm.Characters.Core.Services;
+using RedShirt.Adventure.Realm.Character.Character;
+using RedShirt.Adventure.Realm.Character.Character.Generated;
 using RedShirt.Adventure.Realm.Common.Exceptions;
-using RedShirt.Adventure.Realm.Models.Characters;
+using RedShirt.Adventure.Realm.Models.Characters.Character;
 
-namespace RedShirt.Adventure.Realm.Controllers;
+namespace RedShirt.Adventure.Realm.Controllers.Characters;
 
 [ApiController]
 [Route("character")]
@@ -56,42 +54,41 @@ public class CharacterController(ICharacterService characterService) : Controlle
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterSearchResponse))]
     public async Task<IActionResult> GetList([FromQuery] string? accountId, [FromQuery] string? firstName,
         [FromQuery]
-        string? lastName, [FromQuery] int? mapId, [FromQuery] string? continuationToken)
+        string? lastName, [FromQuery] int pageSize, [FromQuery] Guid? continuationToken)
     {
-        var response = await characterService.SearchAsync(new CharacterSearchRequest
+        var response = await characterService.SearchAsync(new CharacterServiceSearchRequest
         {
             AccountId = accountId,
             FirstName = firstName,
             LastName = lastName,
-            MapId = mapId,
-            ContinuationToken = continuationToken
-        });
+            PageSize = pageSize,
+            CreatedBeforeUtc = null,
+            CreatedAfterUtc = null,
+            UpdatedBeforeUtc = null,
+            UpdatedAfterUtc = null,
+            AccountIdContains = null,
+            FirstNameContains = null,
+            LastNameContains = null
+        }, continuationToken);
 
         return Ok(response);
     }
 
     [HttpPatch("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterDto))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status304NotModified)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] CharacterPatchRequest patchRequest)
     {
         try
         {
-            var result = await characterService.PatchAsync(new CharacterDtoPatchRequest
+            var result = await characterService.PatchAsync(new CharacterServicePatchRequest
             {
                 Id = id,
                 AccountId = patchRequest.AccountId,
                 FirstName = patchRequest.FirstName,
-                LastName = patchRequest.LastName,
-                MapId = patchRequest.MapId,
-                PositionX = patchRequest.PositionX,
-                PositionY = patchRequest.PositionY,
-                PositionZ = patchRequest.PositionZ,
-                Rotation = patchRequest.Rotation,
-                HealthCurrent = patchRequest.HealthCurrent,
-                HealthMaximum = patchRequest.HealthMaximum
+                LastName = patchRequest.LastName
             });
             return Ok(result);
         }
@@ -103,25 +100,23 @@ public class CharacterController(ICharacterService characterService) : Controlle
         {
             return StatusCode(StatusCodes.Status304NotModified);
         }
-        catch (ResourceNotFoundException)
+        catch (ConflictException e)
         {
-            return Problem(statusCode: StatusCodes.Status404NotFound, title: "Resource not found");
+            return Problem(statusCode: StatusCodes.Status409Conflict, title: e.Message);
         }
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterDto))]
-    public async Task<IActionResult> Post([FromQuery] string accountId, [FromQuery] string firstName,
-        [FromQuery]
-        string lastName)
+    public async Task<IActionResult> Post([FromBody] CharacterPostRequest postRequest)
     {
         try
         {
-            var response = await characterService.PostAsync(new CharacterPostRequest
+            var response = await characterService.PostAsync(new CharacterServicePostRequest
             {
-                AccountId = accountId,
-                FirstName = firstName,
-                LastName = lastName
+                AccountId = postRequest.AccountId,
+                FirstName = postRequest.FirstName,
+                LastName = postRequest.LastName
             });
 
             return Ok(response);
@@ -129,6 +124,10 @@ public class CharacterController(ICharacterService characterService) : Controlle
         catch (BadRequestException e)
         {
             return Problem(statusCode: StatusCodes.Status400BadRequest, title: e.Message);
+        }
+        catch (ConflictException e)
+        {
+            return Problem(statusCode: StatusCodes.Status409Conflict, title: e.Message);
         }
     }
 }

@@ -1,4 +1,6 @@
-using RedShirt.Adventure.Realm.Characters.Implementations.Extensions;
+using RedShirt.Adventure.Realm.Character.Extensions;
+using RedShirt.Adventure.Realm.Common.Cache.Extensions;
+using RedShirt.Adventure.Realm.Common.Database.Extensions;
 
 namespace RedShirt.Adventure.Realm.Extensions;
 
@@ -8,6 +10,8 @@ internal static class ServiceCollectionExtensions
         IConfigurationRoot configuration)
     {
         return serviceCollection
-            .AddRealmCharacters(configuration);
+            .AddCaching(configuration)
+            .AddDatabase(configuration)
+            .AddCharacterSupport();
     }
 }

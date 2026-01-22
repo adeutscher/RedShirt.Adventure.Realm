@@ -10,7 +10,7 @@ namespace RedShirt.Adventure.Realm.Characters.Implementations.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRealmCharacters(this IServiceCollection services,
+    public static IServiceCollection AddRealmCharactersImplementations(this IServiceCollection services,
         IConfigurationRoot configuration)
     {
         return services

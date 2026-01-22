@@ -15,12 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\RedShirt.Adventure.Realm.Characters.Core\RedShirt.Adventure.Realm.Characters.Core.csproj"/>
-        <ProjectReference Include="..\RedShirt.Adventure.Realm.Characters.Implementations\RedShirt.Adventure.Realm.Characters.Implementations.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Models\ExampleItem\"/>
+        <ProjectReference Include="..\RedShirt.Adventure.Realm.Character\RedShirt.Adventure.Realm.Character.csproj"/>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
