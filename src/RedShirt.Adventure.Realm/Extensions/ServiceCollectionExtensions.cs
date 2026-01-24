@@ -1,4 +1,6 @@
 using RedShirt.Adventure.Realm.Character.Extensions;
+using RedShirt.Adventure.Realm.Character.Inventory.Core.Extensions;
+using RedShirt.Adventure.Realm.Character.Inventory.Implementations.Extensions;
 using RedShirt.Adventure.Realm.Common.Cache.Extensions;
 using RedShirt.Adventure.Realm.Common.Database.Extensions;
 
@@ -12,6 +14,9 @@ internal static class ServiceCollectionExtensions
         return serviceCollection
             .AddCaching(configuration)
             .AddDatabase(configuration)
-            .AddCharacterSupport();
+            // Characters
+            .AddCharacterSupport()
+            .AddCharacterInventoryCore()
+            .AddCharacterInventoryImplementations();
     }
 }

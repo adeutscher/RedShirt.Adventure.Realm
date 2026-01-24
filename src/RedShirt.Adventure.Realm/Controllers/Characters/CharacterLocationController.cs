@@ -52,7 +52,8 @@ public class CharacterLocationController(ICharacterLocationService characterLoca
     [HttpGet("attributes/location")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterLocationSearchResponse))]
     public async Task<IActionResult> List([FromQuery] int? mapId, [FromQuery] int pageSize,
-        [FromQuery] Guid? continuationToken)
+        [FromQuery]
+        Guid? continuationToken)
     {
         var response = await characterLocationService.SearchAsync(new CharacterLocationServiceSearchRequest
         {

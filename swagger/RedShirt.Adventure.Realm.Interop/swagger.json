@@ -264,6 +264,75 @@
         }
       }
     },
+    "/character/{characterId}/inventory": {
+      "get": {
+        "tags": [
+          "CharacterInventory"
+        ],
+        "operationId": "CharacterInventory_Get",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterInventoryModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character/{characterId}/inventory/_save": {
+      "put": {
+        "tags": [
+          "CharacterInventory"
+        ],
+        "operationId": "CharacterInventory_Save",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterInventoryWriteRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/character/{id}/location": {
       "delete": {
         "tags": [
@@ -892,6 +961,86 @@
           },
           "lastName": {
             "type": "string"
+          }
+        }
+      },
+      "CharacterInventoryModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterInventorySlotModel"
+            }
+          }
+        }
+      },
+      "CharacterInventorySlotModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slot": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "itemId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CharacterInventoryWriteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterInventoryWriteSlot"
+            }
+          }
+        }
+      },
+      "CharacterInventoryWriteSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slotId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "instanceId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "itemId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
