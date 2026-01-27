@@ -10,7 +10,7 @@ namespace RedShirt.Adventure.Realm.Controllers.Characters;
 [ApiController]
 [Route("character")]
 [ProducesJson]
-public class CharacterInventoryController(ICharacterInventoryService characterInventoryService) : Controller
+public class CharacterInventoryController(ICharacterInventoryService characterInventoryService) : ControllerBase
 {
     [HttpGet("{characterId}/inventory")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CharacterInventoryModel))]
@@ -33,7 +33,7 @@ public class CharacterInventoryController(ICharacterInventoryService characterIn
                 CharacterId = characterId,
                 Slots = request.Slots.Select(s => new CharacterInventoryWriteBundle.Slot
                 {
-                    SlotId = s.SlotId,
+                    SlotId = s.Slot,
                     InstanceId = s.InstanceId,
                     ItemId = s.ItemId,
                     Quantity = s.Quantity

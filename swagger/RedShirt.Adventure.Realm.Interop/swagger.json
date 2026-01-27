@@ -1026,7 +1026,7 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "slotId": {
+          "slot": {
             "type": "integer",
             "format": "int32"
           },
