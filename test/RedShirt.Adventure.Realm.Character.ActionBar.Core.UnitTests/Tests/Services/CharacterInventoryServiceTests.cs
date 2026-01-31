@@ -69,7 +69,8 @@ public class CharacterActionBarServiceTests
                 {
                     SlotId = 0,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 }
             ]
         };
@@ -100,13 +101,15 @@ public class CharacterActionBarServiceTests
                 {
                     SlotId = 0,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 },
                 new CharacterActionBarWriteBundle.Slot
                 {
                     SlotId = 1,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 }
             ]
         };
@@ -137,13 +140,15 @@ public class CharacterActionBarServiceTests
                 {
                     SlotId = 1,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 },
                 new CharacterActionBarWriteBundle.Slot
                 {
                     SlotId = 1,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 }
             ]
         };
@@ -162,7 +167,7 @@ public class CharacterActionBarServiceTests
     }
 
     /// <summary>
-    ///     Confirm a complaint if the subject Id is Guid.Empty
+    ///     Confirm a complaint if the subject Id is Guid.Empty on a non-item
     /// </summary>
     [Fact]
     public async Task Test_Set_Unhappy_InstanceId()
@@ -176,7 +181,8 @@ public class CharacterActionBarServiceTests
                 {
                     SlotId = 0,
                     SubjectId = Guid.Empty,
-                    ActionType = CharacterActionBarActionType.Item
+                    ActionType = CharacterActionBarActionType.Spell,
+                    ItemId = Guid.Empty
                 }
             ]
         };
@@ -185,7 +191,70 @@ public class CharacterActionBarServiceTests
         var service = new CharacterActionBarService(repo.Object);
         var ex = await Assert.ThrowsAsync<BadRequestException>(() =>
             service.SetAsync(setObject, TestContext.Current.CancellationToken));
-        Assert.Contains("subject", ex.Message.ToLower());
+        Assert.Contains("subjectid", ex.Message.ToLower());
+
+        repo.Verify(r => r.SetAsync(It.IsAny<CharacterActionBarWriteBundle>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    /// <summary>
+    ///     Confirm a complaint if the item id is Guid.Empty on an item
+    /// </summary>
+    [Fact]
+    public async Task Test_Set_Unhappy_ItemId_Item()
+    {
+        var setObject = new CharacterActionBarWriteBundle
+        {
+            CharacterId = Guid.NewGuid(),
+            Slots =
+            [
+                new CharacterActionBarWriteBundle.Slot
+                {
+                    SlotId = 0,
+                    SubjectId = Guid.NewGuid(),
+                    ActionType = CharacterActionBarActionType.Item,
+                    ItemId = Guid.Empty
+                }
+            ]
+        };
+
+        var repo = new Mock<ICharacterActionBarRepository>(MockBehavior.Strict);
+        var service = new CharacterActionBarService(repo.Object);
+        var ex = await Assert.ThrowsAsync<BadRequestException>(() =>
+            service.SetAsync(setObject, TestContext.Current.CancellationToken));
+        Assert.Contains("itemid", ex.Message.ToLower());
+
+        repo.Verify(r => r.SetAsync(It.IsAny<CharacterActionBarWriteBundle>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    /// <summary>
+    ///     Confirm a complaint if the item id is Guid.Empty on an item instance
+    /// </summary>
+    [Fact]
+    public async Task Test_Set_Unhappy_ItemId_ItemInstance()
+    {
+        var setObject = new CharacterActionBarWriteBundle
+        {
+            CharacterId = Guid.NewGuid(),
+            Slots =
+            [
+                new CharacterActionBarWriteBundle.Slot
+                {
+                    SlotId = 0,
+                    SubjectId = Guid.NewGuid(),
+                    ActionType = CharacterActionBarActionType.ItemInstance,
+                    ItemId = Guid.Empty
+                }
+            ]
+        };
+
+        var repo = new Mock<ICharacterActionBarRepository>(MockBehavior.Strict);
+        var service = new CharacterActionBarService(repo.Object);
+        var ex = await Assert.ThrowsAsync<BadRequestException>(() =>
+            service.SetAsync(setObject, TestContext.Current.CancellationToken));
+        Assert.Contains("itemid", ex.Message.ToLower());
+        Assert.Contains("iteminstance", ex.Message.ToLower());
 
         repo.Verify(r => r.SetAsync(It.IsAny<CharacterActionBarWriteBundle>(), It.IsAny<CancellationToken>()),
             Times.Never);
@@ -206,7 +275,8 @@ public class CharacterActionBarServiceTests
                 {
                     SlotId = -1,
                     ActionType = CharacterActionBarActionType.Item,
-                    SubjectId = Guid.NewGuid()
+                    SubjectId = Guid.NewGuid(),
+                    ItemId = Guid.NewGuid()
                 }
             ]
         };

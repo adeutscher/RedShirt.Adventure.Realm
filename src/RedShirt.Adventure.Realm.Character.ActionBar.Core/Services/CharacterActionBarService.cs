@@ -30,9 +30,16 @@ internal class CharacterActionBarService(ICharacterActionBarRepository repositor
                 throw new BadRequestException("Cannot set empty slot");
             }
 
-            if (action.SubjectId == Guid.Empty)
+            if (action.SubjectId == Guid.Empty && action.ActionType != CharacterActionBarActionType.Item)
             {
-                throw new BadRequestException("Cannot send empty GUID in SubjectId");
+                throw new BadRequestException($"Cannot send empty GUID in SubjectId for an {action.ActionType} action");
+            }
+
+            if (action.ItemId == Guid.Empty
+                && action.ActionType is CharacterActionBarActionType.Item or CharacterActionBarActionType.ItemInstance
+               )
+            {
+                throw new BadRequestException($"Cannot send empty GUID in ItemId for an {action.ActionType} action");
             }
 
             if (!slotTracker.Add(action.SlotId))

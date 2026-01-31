@@ -7,4 +7,5 @@ public class CharacterActionBarSlotModel
     public required int Slot { get; init; }
     public required CharacterActionBarActionType ActionType { get; init; }
     public required Guid SubjectId { get; init; }
+    public required Guid ItemId { get; init; }
 }

@@ -7,4 +7,5 @@ public class CharacterActionBarWriteSlot
     public int Slot { get; init; }
     public CharacterActionBarActionType ActionType { get; init; }
     public Guid SubjectId { get; init; }
+    public Guid ItemId { get; init; }
 }

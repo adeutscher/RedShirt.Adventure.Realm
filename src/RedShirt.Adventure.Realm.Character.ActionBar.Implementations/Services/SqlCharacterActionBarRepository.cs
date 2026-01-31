@@ -51,7 +51,8 @@ public class SqlCharacterActionBarRepository(
                 UpdatedAtUtc = r.UpdatedAtUtc,
                 Slot = r.SlotId,
                 ActionType = r.ActionType,
-                SubjectId = r.SubjectId
+                SubjectId = r.SubjectId,
+                ItemId = r.ItemId
             }).OrderBy(i => i.Slot).ToList()
         };
     }
@@ -131,7 +132,8 @@ public class SqlCharacterActionBarRepository(
                     updatedAtUtc = createdAtUtc,
                     slotId = actionBarSlot.SlotId,
                     actionType = actionBarSlot.ActionType,
-                    subjectId = actionBarSlot.SubjectId
+                    subjectId = actionBarSlot.SubjectId,
+                    itemId = actionBarSlot.ItemId
                 };
 
                 // Doing this so that we're only declaring the list once,
@@ -145,13 +147,14 @@ public class SqlCharacterActionBarRepository(
                     DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.CreatedAtUtc)),
                     DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.UpdatedAtUtc)),
                     DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.ActionType)),
-                    DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.SubjectId))
+                    DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.SubjectId)),
+                    DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.ItemId))
                 ];
 
                 var dtoInsertQuery = new SqlBuilder()
                     .AddTemplate($"INSERT INTO {DatabaseUtility.QuoteResource(TableName)}"
                                  + $" ({string.Join(", ", insertFields)})"
-                                 + " VALUES (@characterId, @slotId, @createdAtUtc, @updatedAtUtc, @actionType, @subjectId)",
+                                 + " VALUES (@characterId, @slotId, @createdAtUtc, @updatedAtUtc, @actionType, @subjectId, @itemId)",
                         insertParams);
                 await retryPolicy.ExecuteAsync(() =>
                     connection.ExecuteAsync(dtoInsertQuery.RawSql, dtoInsertQuery.Parameters));
@@ -164,7 +167,8 @@ public class SqlCharacterActionBarRepository(
                 {
                     updatedAtUtc = DateTime.UtcNow,
                     actionType = actionBarSlot.ActionType,
-                    subjectId = actionBarSlot.SubjectId
+                    subjectId = actionBarSlot.SubjectId,
+                    itemId = actionBarSlot.ItemId
                 };
 
                 var updateStatements = new List<string>();
@@ -179,6 +183,12 @@ public class SqlCharacterActionBarRepository(
                 {
                     updateStatements.Add(
                         $"{DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.SubjectId))} = @subjectId");
+                }
+
+                if (dto.ItemId != actionBarSlot.ItemId)
+                {
+                    updateStatements.Add(
+                        $"{DatabaseUtility.QuoteResource(nameof(ActionBarSlotDto.ItemId))} = @itemId");
                 }
 
                 if (updateStatements.Count == 0)
@@ -214,5 +224,6 @@ public class SqlCharacterActionBarRepository(
         public required DateTime UpdatedAtUtc { get; init; }
         public required CharacterActionBarActionType ActionType { get; init; }
         public required Guid SubjectId { get; init; }
+        public required Guid ItemId { get; init; }
     }
 }

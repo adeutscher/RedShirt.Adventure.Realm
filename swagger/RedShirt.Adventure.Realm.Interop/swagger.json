@@ -965,6 +965,10 @@
           "subjectId": {
             "type": "string",
             "format": "guid"
+          },
+          "itemId": {
+            "type": "string",
+            "format": "guid"
           }
         }
       },
@@ -1006,6 +1010,10 @@
             "$ref": "#/components/schemas/CharacterActionBarActionType"
           },
           "subjectId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "itemId": {
             "type": "string",
             "format": "guid"
           }

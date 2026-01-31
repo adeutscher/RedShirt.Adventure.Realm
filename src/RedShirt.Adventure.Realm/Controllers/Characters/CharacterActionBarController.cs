@@ -35,7 +35,8 @@ public class CharacterActionBarController(ICharacterActionBarService characterAc
                 {
                     SlotId = s.Slot,
                     ActionType = s.ActionType,
-                    SubjectId = s.SubjectId
+                    SubjectId = s.SubjectId,
+                    ItemId = s.ItemId
                 }).ToList()
             });
         }

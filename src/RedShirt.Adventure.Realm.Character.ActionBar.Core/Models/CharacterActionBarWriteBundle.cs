@@ -10,5 +10,6 @@ public class CharacterActionBarWriteBundle
         public required int SlotId { get; init; }
         public required CharacterActionBarActionType ActionType { get; init; }
         public required Guid SubjectId { get; init; }
+        public required Guid ItemId { get; init; }
     }
 }
