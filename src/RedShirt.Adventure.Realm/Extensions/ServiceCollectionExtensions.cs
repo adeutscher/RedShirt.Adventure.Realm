@@ -1,3 +1,5 @@
+using RedShirt.Adventure.Realm.Character.ActionBar.Core.Extensions;
+using RedShirt.Adventure.Realm.Character.ActionBar.Implementations.Extensions;
 using RedShirt.Adventure.Realm.Character.Extensions;
 using RedShirt.Adventure.Realm.Character.Inventory.Core.Extensions;
 using RedShirt.Adventure.Realm.Character.Inventory.Implementations.Extensions;
@@ -16,6 +18,8 @@ internal static class ServiceCollectionExtensions
             .AddDatabase(configuration)
             // Characters
             .AddCharacterSupport()
+            .AddCharacterActionBarCore()
+            .AddCharacterActionBarImplementations()
             .AddCharacterInventoryCore()
             .AddCharacterInventoryImplementations();
     }

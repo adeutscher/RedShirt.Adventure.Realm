@@ -68,6 +68,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Characters", "Characters", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedShirt.Adventure.Realm.Character.Inventory.Core.UnitTests", "test\RedShirt.Adventure.Realm.Character.Inventory.Core.UnitTests\RedShirt.Adventure.Realm.Character.Inventory.Core.UnitTests.csproj", "{EA32A23C-7EFA-46F0-9DF5-C7ACA46C59D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedShirt.Adventure.Realm.Character.ActionBar.Core", "src\RedShirt.Adventure.Realm.Character.ActionBar.Core\RedShirt.Adventure.Realm.Character.ActionBar.Core.csproj", "{C3B1A8FE-23FF-4186-9692-E987FA423EBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedShirt.Adventure.Realm.Character.ActionBar.Implementations", "src\RedShirt.Adventure.Realm.Character.ActionBar.Implementations\RedShirt.Adventure.Realm.Character.ActionBar.Implementations.csproj", "{61B9F54B-812F-41C3-8316-6F87681DD3F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedShirt.Adventure.Realm.Character.ActionBar.Core.UnitTests", "test\RedShirt.Adventure.Realm.Character.ActionBar.Core.UnitTests\RedShirt.Adventure.Realm.Character.ActionBar.Core.UnitTests.csproj", "{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +148,18 @@ Global
 		{EA32A23C-7EFA-46F0-9DF5-C7ACA46C59D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA32A23C-7EFA-46F0-9DF5-C7ACA46C59D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA32A23C-7EFA-46F0-9DF5-C7ACA46C59D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3B1A8FE-23FF-4186-9692-E987FA423EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B1A8FE-23FF-4186-9692-E987FA423EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B1A8FE-23FF-4186-9692-E987FA423EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B1A8FE-23FF-4186-9692-E987FA423EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B9F54B-812F-41C3-8316-6F87681DD3F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B9F54B-812F-41C3-8316-6F87681DD3F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B9F54B-812F-41C3-8316-6F87681DD3F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B9F54B-812F-41C3-8316-6F87681DD3F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4BFAEB53-6FEB-4CB6-AEBC-D9DFB07BB488} = {31171FEB-4838-475C-865E-ECB6B988456B}
@@ -168,5 +186,8 @@ Global
 		{0CF39593-E1A4-4E17-8E84-2E5BA5149743} = {B22B42A1-705B-4346-AF94-C5CE868B32F5}
 		{2B1E290E-B086-4E8A-B84F-3B45CC343AEC} = {E8344A39-85AE-4B3F-A2AE-AEB32BC51446}
 		{EA32A23C-7EFA-46F0-9DF5-C7ACA46C59D7} = {2B1E290E-B086-4E8A-B84F-3B45CC343AEC}
+		{C3B1A8FE-23FF-4186-9692-E987FA423EBA} = {B22B42A1-705B-4346-AF94-C5CE868B32F5}
+		{61B9F54B-812F-41C3-8316-6F87681DD3F3} = {B22B42A1-705B-4346-AF94-C5CE868B32F5}
+		{1813DF33-A888-4F0F-B87D-B41B1D0CC7F6} = {2B1E290E-B086-4E8A-B84F-3B45CC343AEC}
 	EndGlobalSection
 EndGlobal

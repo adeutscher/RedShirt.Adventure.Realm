@@ -6,6 +6,75 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/character/{characterId}/action-bar": {
+      "get": {
+        "tags": [
+          "CharacterActionBar"
+        ],
+        "operationId": "CharacterActionBar_Get",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterActionBarModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/character/{characterId}/action-bar/_save": {
+      "put": {
+        "tags": [
+          "CharacterActionBar"
+        ],
+        "operationId": "CharacterActionBar_Save",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterActionBarWriteRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/character/{id}": {
       "delete": {
         "tags": [
@@ -858,6 +927,90 @@
   },
   "components": {
     "schemas": {
+      "CharacterActionBarModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterActionBarSlotModel"
+            }
+          }
+        }
+      },
+      "CharacterActionBarSlotModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slot": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actionType": {
+            "$ref": "#/components/schemas/CharacterActionBarActionType"
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "CharacterActionBarActionType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Item",
+          "ItemInstance",
+          "Spell"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "CharacterActionBarWriteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slots": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterActionBarWriteSlot"
+            }
+          }
+        }
+      },
+      "CharacterActionBarWriteSlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "slot": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actionType": {
+            "$ref": "#/components/schemas/CharacterActionBarActionType"
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
       "ProblemDetails": {
         "type": "object",
         "additionalProperties": {
