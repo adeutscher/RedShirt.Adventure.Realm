@@ -1225,6 +1225,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "mapInstanceId": {
+            "type": "string",
+            "format": "guid"
+          },
           "positionX": {
             "type": "number",
             "format": "float"
@@ -1269,6 +1273,11 @@
             "format": "int32",
             "nullable": true
           },
+          "mapInstanceId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
           "positionX": {
             "type": "number",
             "format": "float",
@@ -1298,6 +1307,10 @@
           "mapId": {
             "type": "integer",
             "format": "int32"
+          },
+          "mapInstanceId": {
+            "type": "string",
+            "format": "guid"
           },
           "positionX": {
             "type": "number",

@@ -63,6 +63,7 @@ public class CharacterLocationController(ICharacterLocationService characterLoca
             UpdatedBeforeUtc = null,
             UpdatedAfterUtc = null,
             MapId = mapId,
+            MapInstanceId = null,
             MapIdGreaterThan = null,
             MapIdLessThan = null,
             PositionXGreaterThan = null,
@@ -91,6 +92,7 @@ public class CharacterLocationController(ICharacterLocationService characterLoca
             {
                 CharacterId = id,
                 MapId = patchRequest.MapId,
+                MapInstanceId = patchRequest.MapInstanceId,
                 PositionX = patchRequest.PositionX,
                 PositionY = patchRequest.PositionY,
                 PositionZ = patchRequest.PositionZ,
@@ -125,6 +127,7 @@ public class CharacterLocationController(ICharacterLocationService characterLoca
             {
                 CharacterId = id,
                 MapId = putRequest.MapId,
+                MapInstanceId = putRequest.MapInstanceId,
                 PositionX = putRequest.PositionX,
                 PositionY = putRequest.PositionY,
                 PositionZ = putRequest.PositionZ,

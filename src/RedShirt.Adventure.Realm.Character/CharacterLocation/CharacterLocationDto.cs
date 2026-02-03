@@ -16,6 +16,7 @@ public class CharacterLocationDto
     public required DateTime UpdatedAtUtc { get; init; }
 
     public required int MapId { get; init; }
+    public required Guid MapInstanceId { get; init; }
     public required float PositionX { get; init; }
     public required float PositionY { get; init; }
     public required float PositionZ { get; init; }
