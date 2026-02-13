@@ -1,3 +1,4 @@
+using RedShirt.Adventure.Realm.Common.Analyzers.Generation.Exceptions;
 using RedShirt.Adventure.Realm.Common.Analyzers.Generation.Extensions;
 using RedShirt.Adventure.Realm.Common.Analyzers.Generation.Models;
 using RedShirt.Adventure.Realm.Common.Analyzers.Generation.Utility;
@@ -194,6 +195,24 @@ public static class RepositoryLevelGenerator
             // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
             switch (dtoProperty.Category)
             {
+                case PropertyModel.PropertyCategory.Bool:
+
+                    if (dtoProperty.IsNullable)
+                    {
+                        throw new NullableSearchNotSupportedException();
+                    }
+
+                    sb.AppendLineWithIndent(2, $"if(parameters.{dtoProperty.Name}.HasValue)")
+                        .OpenBracket(2)
+                        .AppendLineWithIndent(3, "builder = builder.Where(")
+                        .AppendLineWithIndent(4,
+                            WrapSimpleDatabaseUtilityQuoteString(baseNamespace, classSummaryModel.FullDtoName,
+                                dtoProperty.Name, $"= @{paramName}") + ",")
+                        .AppendLineWithIndent(4,
+                            "new {" + paramName + $" = parameters.{dtoProperty.Name}.Value" + "}")
+                        .AppendLineWithIndent(3, ");")
+                        .CloseBracket(2);
+                    break;
                 case PropertyModel.PropertyCategory.Guid:
                 case PropertyModel.PropertyCategory.Enum:
                     // both guid and enum handling are flat equals comparisons only
