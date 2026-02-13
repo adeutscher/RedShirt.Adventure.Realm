@@ -3,6 +3,7 @@ using RedShirt.Adventure.Realm.Common.Analyzers.Abstractions.Attributes;
 namespace RedShirt.Adventure.Realm.Character.Character;
 
 [DbTable("Character")]
+[DoNotGenerateService]
 public class CharacterDto
 {
     [DbKey]
