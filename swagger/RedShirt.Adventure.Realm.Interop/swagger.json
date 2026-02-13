@@ -668,6 +668,281 @@
         }
       }
     },
+    "/character/{id}/party-data": {
+      "delete": {
+        "tags": [
+          "CharacterPartyData"
+        ],
+        "operationId": "CharacterPartyData_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CharacterPartyData"
+        ],
+        "operationId": "CharacterPartyData_Get",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterPartyDataDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CharacterPartyData"
+        ],
+        "operationId": "CharacterPartyData_Patch",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "patchRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterPartyDataPatchRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterPartyDataDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CharacterPartyData"
+        ],
+        "operationId": "CharacterPartyData_Put",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "putRequest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharacterPartyDataPutRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterPartyDataDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/character/attributes/party-data": {
+      "get": {
+        "tags": [
+          "CharacterPartyData"
+        ],
+        "operationId": "CharacterPartyData_List",
+        "parameters": [
+          {
+            "name": "partyId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "isInParty",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid",
+              "nullable": true
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterPartyDataSearchResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/character/{id}/resources": {
       "delete": {
         "tags": [
@@ -1327,6 +1602,76 @@
           "rotation": {
             "type": "number",
             "format": "float"
+          }
+        }
+      },
+      "CharacterPartyDataDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "characterId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "partyId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "isInParty": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CharacterPartyDataSearchResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "continuationToken": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharacterPartyDataDto"
+            }
+          }
+        }
+      },
+      "CharacterPartyDataPatchRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "partyId": {
+            "type": "string",
+            "format": "guid",
+            "nullable": true
+          },
+          "isInParty": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "CharacterPartyDataPutRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "partyId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "isInParty": {
+            "type": "boolean"
           }
         }
       },
